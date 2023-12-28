@@ -1,12 +1,11 @@
 import os
 import pandas as pd
-import numpy as np
 from tkinter import *
 from tkinter import filedialog, ttk
 import tkinter.font as font
 from functools import partial
 from pyresparser import ResumeParser
-from sklearn import datasets, linear_model 
+from sklearn import datasets, linear_model
 import spacy
 import subprocess
 
@@ -16,7 +15,7 @@ try:
 except OSError:
     subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"])
 
-class train_model:
+class TrainModel:
     
     def train(self):
         data = pd.read_csv('training_dataset.csv')
@@ -95,39 +94,39 @@ def prediction_result(top, aplcnt_name, cv_path, personality_values):
     result = Tk()
     result.title("Predicted Personality")
     result.geometry("800x600")
-    result.configure(background='#f0f0f0')
-    
-    titleFont = font.Font(family='Arial', size=32, weight='bold')
-    Label(result, text="Result - Personality Prediction", foreground='#006633', bg='#f0f0f0', font=titleFont, pady=20).pack(fill=BOTH)
-    
-    Label(result, text=str('{} : {}'.format("Name:", aplcnt_name.get())).title(), foreground='#333333', bg='#f0f0f0', anchor='w', padx=20).pack(fill=BOTH)
-    Label(result, text=str('{} : {}'.format("Age:", age)), foreground='#333333', bg='#f0f0f0', anchor='w', padx=20).pack(fill=BOTH)
+    result.configure(background='#FAF0E6')  # Light Peach color
+
+    title_font = font.Font(family='Arial', size=32, weight='bold', underline=True)
+    Label(result, text="Result - Personality Prediction", foreground='#008080', bg='#FAF0E6', font=title_font, pady=20).pack(fill=BOTH)
+
+    Label(result, text=str('{} : {}'.format("Name:", aplcnt_name.get())).title(), foreground='#333333', bg='#FAF0E6', anchor='w', padx=20).pack(fill=BOTH)
+    Label(result, text=str('{} : {}'.format("Age:", age)), foreground='#333333', bg='#FAF0E6', anchor='w', padx=20).pack(fill=BOTH)
     for key in data.keys():
         if data[key] is not None:
-            Label(result, text=str('{} : {}'.format(check_type(key.title()), check_type(data[key]))), foreground='#333333', bg='#f0f0f0', anchor='w', width=60, padx=20).pack(fill=BOTH)
-    Label(result, text=str("Predicted Personality: " + personality).title(), foreground='#333333', bg='#f0f0f0', anchor='w', padx=20).pack(fill=BOTH)
+            Label(result, text=str('{} : {}'.format(check_type(key.title()), check_type(data[key]))), foreground='#333333', bg='#FAF0E6', anchor='w', width=60, padx=20).pack(fill=BOTH)
+    Label(result, text=str("Predicted Personality: " + personality).title(), foreground='#333333', bg='#FAF0E6', anchor='w', padx=20).pack(fill=BOTH)
     
-    quitBtn = ttk.Button(result, text="Exit", command=result.destroy)
+    quitBtn = ttk.Button(result, text="Exit", command=result.destroy, style='TButton.Exit.TButton')
     quitBtn.pack(pady=10)
 
-    terms_mean = """
-# Openness:
-    People who like to learn new things and enjoy new experiences usually score high in openness. Openness includes traits like being insightful and imaginative and having a wide variety of interests.
+#     terms_mean = """
+# # Openness:
+#     People who like to learn new things and enjoy new experiences usually score high in openness. Openness includes traits like being insightful and imaginative and having a wide variety of interests.
 
-# Conscientiousness:
-    People that have a high degree of conscientiousness are reliable and prompt. Traits include being organised, methodic, and thorough.
+# # Conscientiousness:
+#     People that have a high degree of conscientiousness are reliable and prompt. Traits include being organised, methodic, and thorough.
 
-# Extraversion:
-    Extraversion traits include being; energetic, talkative, and assertive (sometime seen as outspoken by Introverts). Extraverts get their energy and drive from others, while introverts are self-driven get their drive from within themselves.
+# # Extraversion:
+#     Extraversion traits include being; energetic, talkative, and assertive (sometime seen as outspoken by Introverts). Extraverts get their energy and drive from others, while introverts are self-driven get their drive from within themselves.
 
-# Agreeableness:
-    As it perhaps sounds, these individuals are warm, friendly, compassionate and cooperative and traits include being kind, affectionate, and sympathetic. In contrast, people with lower levels of agreeableness may be more distant.
+# # Agreeableness:
+#     As it perhaps sounds, these individuals are warm, friendly, compassionate and cooperative and traits include being kind, affectionate, and sympathetic. In contrast, people with lower levels of agreeableness may be more distant.
 
-# Neuroticism:
-    Neuroticism or Emotional Stability relates to degree of negative emotions. People that score high on neuroticism often experience emotional instability and negative emotions. Characteristics typically include being moody and tense.    
-"""
+# # Neuroticism:
+#     Neuroticism or Emotional Stability relates to degree of negative emotions. People that score high on neuroticism often experience emotional instability and negative emotions. Characteristics typically include being moody and tense.    
+# """
     
-    Label(result, text=terms_mean, foreground='#006633', bg='#f0f0f0', anchor='w', justify=LEFT, padx=20).pack(fill=BOTH)
+    Label(result,  foreground='#008080', bg='#FAF0E6', anchor='w', justify=LEFT, padx=20).pack(fill=BOTH)
 
     result.mainloop()
 
@@ -137,10 +136,10 @@ def predict_person():
     top = Toplevel()
     top.geometry('800x600')
     top.title("Apply For A Job")
-    top.configure(background='#333333')
+    top.configure(background='#483D8B')  # Dark Slate Blue color
     
-    titleFont = font.Font(family='Helvetica', size=30, weight='bold')
-    Label(top, text="Personality Prediction", foreground='#FF4500', bg='#333333', font=titleFont, pady=20).pack()
+    title_font = font.Font(family='Helvetica', size=30, weight='bold', underline=True)
+    Label(top, text="Personality Prediction", foreground='#DAA520', bg='#483D8B', font=title_font, pady=20).pack()
 
     job_list = ('Select Job', '101-Developer at TTC', '102-Chef at Taj', '103-Professor at MIT')
     job = StringVar(top)
@@ -158,19 +157,19 @@ def predict_person():
     entries = []
 
     for i, label in enumerate(labels):
-        Label(top, text=label, foreground='#ffffff', bg='#333333').place(x=70, y=130 + 30 * i)
+        Label(top, text=label, foreground='#ffffff', bg='#483D8B').place(x=70, y=130 + 30 * i)
 
     sName = Entry(top)
     sName.place(x=450, y=130, width=160)
     age = Entry(top)
     age.place(x=450, y=160, width=160)
     gender = IntVar()
-    R1 = Radiobutton(top, text="Male", variable=gender, value=1, padx=7)
+    R1 = Radiobutton(top, text="Male", variable=gender, value=1, padx=7, bg='#483D8B', fg='black')
     R1.place(x=450, y=190)
-    R2 = Radiobutton(top, text="Female", variable=gender, value=0, padx=3)
+    R2 = Radiobutton(top, text="Female", variable=gender, value=0, padx=3, bg='#483D8B', fg='black')
     R2.place(x=540, y=190)
     
-    cvBtn = ttk.Button(top, text="Select File", command=lambda: OpenFile(cvBtn))
+    cvBtn = ttk.Button(top, text="Select File", command=lambda: OpenFile(cvBtn), style='TButton.Upload.TButton')
     cvBtn.place(x=450, y=220, width=160)
 
     openness = Entry(top)
@@ -191,7 +190,7 @@ def predict_person():
 
     entries.extend([sName, age, openness, neuroticism, conscientiousness, agreeableness, extraversion])
 
-    submitBtn = ttk.Button(top, text="Submit", command=lambda: prediction_result(top, sName, loc, (gender.get(), age.get(), openness.get(), neuroticism.get(), conscientiousness.get(), agreeableness.get(), extraversion.get())))
+    submitBtn = ttk.Button(top, text="Submit", command=lambda: prediction_result(top, sName, loc, [gender.get()] + [e.get() for e in entries[1:]]), style='TButton.Submit.TButton')
     submitBtn.place(x=350, y=400, width=200)
 
     top.mainloop()
@@ -213,21 +212,24 @@ def OpenFile(b4):
     b4.config(text=filename)
     return
 
-
 if __name__ == "__main__":
-    model = train_model()
+    model = TrainModel()
     model.train()
 
     root = Tk()
     root.geometry('800x600')
-    root.configure(background='#333333')
+    root.configure(background='#483D8B')  # Dark Slate Blue color
     root.title("Personality Prediction System")
-    titleFont = font.Font(family='Helvetica', size=40, weight='bold')
-    homeBtnFont = font.Font(size=12, weight='bold')
-    Label(root, text="Personality Prediction System", bg='#333333', font=titleFont, pady=30, fg='#FF4500').pack()
-    ttk.Button(root, text="Predict Personality", style='my.TButton', command=predict_person).place(relx=0.5, rely=0.5, anchor=CENTER)
+    title_font = font.Font(family='Helvetica', size=40, weight='bold', underline=True)
+    home_btn_font = font.Font(size=12, weight='bold')
+    Label(root, text="Personality Prediction System", bg='#483D8B', font=title_font, pady=30, fg='#DAA520').pack()
+    ttk.Button(root, text="Predict Personality", style='TButton.Predict.TButton', command=predict_person).place(relx=0.5, rely=0.5, anchor=CENTER)
 
     style = ttk.Style()
-    style.configure('my.TButton', foreground='white', background='#006633', font=('Helvetica', 12, 'bold'))
-    
+    style.configure('TButton.Predict.TButton', foreground='black', background='black', font=('Helvetica', 12, 'bold'))
+    style.configure('TButton.Upload.TButton', foreground='black', background='#008080', font=('Helvetica', 12, 'bold'))
+    style.configure('TButton.Submit.TButton', foreground='black', background='black', font=('Helvetica', 12, 'bold'))
+    style.configure('TButton.Exit.TButton', foreground='#ffffff', background='#008080', font=('Helvetica', 12, 'bold'))
+
     root.mainloop()
+
